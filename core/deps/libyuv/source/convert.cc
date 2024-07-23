@@ -2561,6 +2561,49 @@ int RGBAToI420(const uint8_t* src_rgba,
 #define HAS_RGB24TOYROW
 #endif
 
+LIBYUV_API
+int RGBAToH420(const uint8_t* src_rgba,
+               int src_stride_rgba,
+               uint8_t* dst_y,
+               int dst_stride_y,
+               uint8_t* dst_u,
+               int dst_stride_u,
+               uint8_t* dst_v,
+               int dst_stride_v,
+               int width,
+               int height){
+
+
+    if (!src_rgba || !dst_y || !dst_u || !dst_v) {
+        return -1; // Invalid input pointers
+    }
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            int rgba_index = y * src_stride_rgba + x * 4;
+            uint8_t r = src_rgba[rgba_index];
+            uint8_t g = src_rgba[rgba_index + 1];
+            uint8_t b = src_rgba[rgba_index + 2];
+
+            // BT.709 conversion formulas
+            uint8_t y_val = (uint8_t)(0.2126 * r + 0.7152 * g + 0.0722 * b);
+            uint8_t u_val = (uint8_t)((b - y_val) * 0.5389 + 128);
+            uint8_t v_val = (uint8_t)((r - y_val) * 0.6350 + 128);
+
+            dst_y[y * dst_stride_y + x] = y_val;
+
+            if (y % 2 == 0 && x % 2 == 0) {
+                int uv_index = (y / 2) * dst_stride_u + (x / 2);
+                dst_u[uv_index] = u_val;
+                dst_v[uv_index] = v_val;
+            }
+        }
+    }
+
+    return 0;
+}
+
+
 // Convert RGB24 to I420.
 LIBYUV_API
 int RGB24ToI420(const uint8_t* src_rgb24,

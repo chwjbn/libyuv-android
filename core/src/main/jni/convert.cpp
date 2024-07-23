@@ -190,6 +190,10 @@ PLANES_1_TO_3(ABGRToI420, abgr, y, u, v);
 // RGBA little endian (abgr in memory) to I420.
 PLANES_1_TO_3(RGBAToI420, rgba, y, u, v);
 
+
+// RGBA little endian (abgr in memory) to I420.
+PLANES_1_TO_3(RGBAToH420, rgba, y, u, v);
+
 // RGB little endian (bgr in memory) to I420.
 PLANES_1_TO_3(RGB24ToI420, rgb24, y, u, v);
 

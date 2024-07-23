@@ -29,6 +29,17 @@ class RgbaBuffer private constructor(
         )
     }
 
+    fun convertTo(dst: H420Buffer) {
+        val (fixedWidth, fixedHeight) = calculateSize(dst)
+        Yuv.convertRGBAToH420(
+            srcRGBA = plane.buffer, srcStrideRGBA = plane.rowStride, srcOffsetRGBA = offset(0),
+            dstY = dst.planeY.buffer, dstStrideY = dst.planeY.rowStride, dstOffsetY = dst.offset(0),
+            dstU = dst.planeU.buffer, dstStrideU = dst.planeU.rowStride, dstOffsetU = dst.offset(1),
+            dstV = dst.planeV.buffer, dstStrideV = dst.planeV.rowStride, dstOffsetV = dst.offset(2),
+            width = fixedWidth, height = fixedHeight,
+        )
+    }
+
     fun convertTo(dst: J400Buffer) {
         val (fixedWidth, fixedHeight) = calculateSize(dst)
         Yuv.convertRGBAToJ400(

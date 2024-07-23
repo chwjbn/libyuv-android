@@ -213,6 +213,16 @@ object Yuv {
         width: Int, height: Int,
     )
 
+
+    @JvmName("convertRGBAToH420")
+    external fun convertRGBAToH420(
+        srcRGBA: ByteBuffer, srcStrideRGBA: RowStride, srcOffsetRGBA: Int,
+        dstY: ByteBuffer, dstStrideY: RowStride, dstOffsetY: Int,
+        dstU: ByteBuffer, dstStrideU: RowStride, dstOffsetU: Int,
+        dstV: ByteBuffer, dstStrideV: RowStride, dstOffsetV: Int,
+        width: Int, height: Int,
+    )
+
     /** RGB little endian (bgr in memory) to I420 */
     @JvmName("convertRGB24ToI420")
     external fun convertRGB24ToI420(

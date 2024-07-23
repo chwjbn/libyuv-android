@@ -839,6 +839,18 @@ int RGBAToI420(const uint8_t* src_rgba,
                int width,
                int height);
 
+LIBYUV_API
+int RGBAToH420(const uint8_t* src_rgba,
+               int src_stride_rgba,
+               uint8_t* dst_y,
+               int dst_stride_y,
+               uint8_t* dst_u,
+               int dst_stride_u,
+               uint8_t* dst_v,
+               int dst_stride_v,
+               int width,
+               int height);
+
 // RGB little endian (bgr in memory) to I420.
 LIBYUV_API
 int RGB24ToI420(const uint8_t* src_rgb24,
